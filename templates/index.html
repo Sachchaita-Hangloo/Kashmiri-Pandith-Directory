@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Kashmiri Pandit Directory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        header {
+            background: #50b3a2;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .nav {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .nav a {
+            display: inline-block;
+            color: #50b3a2;
+            text-decoration: none;
+            padding: 10px 25px;
+            margin: 0 5px;
+            border: 1px solid #50b3a2;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .nav a:hover {
+            background: #50b3a2;
+            color: white;
+        }
+        .main-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .flash-message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .flash-message.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .flash-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Global Kashmiri Pandit Directory</h1>
+            <p>Connecting Kashmiri Pandits around the world</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="nav">
+            <a href="{{ url_for('add') }}">Add Your Information</a>
+            <a href="{{ url_for('search') }}">Find Nearby Pandits</a>
+            <a href="{{ url_for('digital_village') }}">Digital Village</a>
+            <a href="{{ url_for('events') }}">Community Events</a>
+            <a href="{{ url_for('nearby_events') }}">Nearby Events</a>
+        </div>
+        
+        <div class="main-content">
+            <h2>Welcome to the Global Kashmiri Pandit Directory</h2>
+            <p>This directory aims to connect Kashmiri Pandits across the globe. Whether you're looking to reconnect with community members from your original village, find Pandits in your current location, or participate in cultural events, this platform can help you rebuild and strengthen our community bonds.</p>
+            
+            <h3>How it works:</h3>
+            <ol>
+                <li><strong>Add your information</strong> - Share your current location and your original Kashmir residence</li>
+                <li><strong>Find nearby Pandits</strong> - Connect with community members near your current location</li>
+                <li><strong>Digital Village</strong> - Reconnect with people from your original village or city in Kashmir</li>
+                <li><strong>Community Events</strong> - Discover and participate in cultural gatherings, religious ceremonies, and social events</li>
+                <li><strong>Host an Event</strong> - Create and promote your own community gathering</li>
+            </ol>
+            
+            <p>This platform was created to strengthen our cultural bonds, preserve our heritage, and rebuild our community across geographical distances. The Kashmiri Pandit diaspora may be spread worldwide, but through this directory, we can maintain our connections and shared identity.</p>
+            
+            {% if upcoming_events %}
+            <div class="upcoming-events">
+                <h3>Upcoming Community Events</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Date</th>
+                            <th>Location</th>
+                            <th>Host</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for event in upcoming_events %}
+                        <tr>
+                            <td>{{ event.title }}</td>
+                            <td>{{ event.event_date }}</td>
+                            <td>{{ event.city }}, {{ event.country }}</td>
+                            <td>{{ event.host_name }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <p><a href="{{ url_for('events') }}">View all events</a> | <a href="{{ url_for('add_event') }}">Host your own event</a></p>
+            </div>
+            {% else %}
+            <div class="no-events">
+                <h3>Host a Community Event</h3>
+                <p>There are no upcoming events in our directory. Would you like to organize a community gathering?</p>
+                <p><a href="{{ url_for('add_event') }}">Host an Event</a></p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Global Kashmiri Pandit Directory</p>
+        </div>
+    </footer>
+</body>
+</html>

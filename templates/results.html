@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - Global Kashmiri Pandit Directory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        header {
+            background: #50b3a2;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .nav {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .nav a {
+            display: inline-block;
+            color: #50b3a2;
+            text-decoration: none;
+            padding: 10px 25px;
+            margin: 0 5px;
+            border: 1px solid #50b3a2;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .nav a:hover {
+            background: #50b3a2;
+            color: white;
+        }
+        .main-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .result-info {
+            background-color: #e9f7f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #50b3a2;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .no-results {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Global Kashmiri Pandit Directory</h1>
+            <p>Search Results</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="nav">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('add') }}">Add Your Information</a>
+            <a href="{{ url_for('search') }}">New Search</a>
+        </div>
+        
+        <div class="main-content">
+            <div class="result-info">
+                <h2>Search Results</h2>
+                <p>Showing Kashmiri Pandits within {{ radius }} km of {{ search_location }}</p>
+            </div>
+            
+            {% if users %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>City</th>
+                            <th>Country</th>
+                            <th>Distance (km)</th>
+                            <th>Contact Info</th>
+                            <th>Kashmir Origin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.city }}</td>
+                            <td>{{ user.country }}</td>
+                            <td>{{ user.distance }}</td>
+                            <td>{{ user.contact_info if user.contact_info else "Not provided" }}</td>
+                            <td>{{ user.village_city if user.village_city else "Not provided" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <p>Found {{ users|length }} Kashmiri Pandits near your location.</p>
+            {% else %}
+                <div class="no-results">
+                    <p>No Kashmiri Pandits found within {{ radius }} km of your location.</p>
+                    <p>You can be the first to add your information in this area!</p>
+                    <p><a href="{{ url_for('add') }}">Add Your Information</a></p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Global Kashmiri Pandit Directory</p>
+        </div>
+    </footer>
+</body>
+</html>

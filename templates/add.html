@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Your Information - Global Kashmiri Pandit Directory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        header {
+            background: #50b3a2;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .nav {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .nav a {
+            display: inline-block;
+            color: #50b3a2;
+            text-decoration: none;
+            padding: 10px 25px;
+            margin: 0 5px;
+            border: 1px solid #50b3a2;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .nav a:hover {
+            background: #50b3a2;
+            color: white;
+        }
+        .main-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group input[type="submit"] {
+            display: inline-block;
+            background: #50b3a2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .form-group input[type="submit"]:hover {
+            background: #3a8879;
+        }
+        .flash-message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .flash-message.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .flash-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Global Kashmiri Pandit Directory</h1>
+            <p>Add Your Information</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="nav">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('search') }}">Find Nearby Pandits</a>
+        </div>
+        
+        <div class="main-content">
+            <h2>Add Your Information to the Directory</h2>
+            <p>Please fill out the form below to add your information to the Global Kashmiri Pandit Directory. Your information will help other community members find you.</p>
+            
+            <form method="POST" action="{{ url_for('add') }}">
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="city">Current City:</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="country">Current Country:</label>
+                    <input type="text" id="country" name="country" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact_info">Contact Information (Email, Phone, Social Media):</label>
+                    <input type="text" id="contact_info" name="contact_info" placeholder="How others can reach you">
+                </div>
+                
+                <div class="form-group">
+                    <label for="kashmir_residence">Original Kashmir Residence (Address/Area):</label>
+                    <input type="text" id="kashmir_residence" name="kashmir_residence" placeholder="Where you lived in Kashmir">
+                </div>
+                
+                <div class="form-group">
+                    <label for="village_city">Original Village/City in Kashmir:</label>
+                    <input type="text" id="village_city" name="village_city" placeholder="Your ancestral village or city">
+                </div>
+                
+                <div class="form-group">
+                    <input type="submit" value="Add My Information">
+                </div>
+            </form>
+            
+            <p><small>Note: We will convert your city and country into geographical coordinates to help with location-based searching. Your contact information will be shown to other Kashmiri Pandits searching in your area.</small></p>
+            <p><small>The Village/City information helps reconnect people from the same areas in Kashmir through our Digital Village feature.</small></p>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Global Kashmiri Pandit Directory</p>
+        </div>
+    </footer>
+</body>
+</html>
